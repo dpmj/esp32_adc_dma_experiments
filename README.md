@@ -28,10 +28,3 @@ The current set of pin assignment in the code are:
 | ws_io_num   | GPIO_NUM_25 | I2S - LRCLK - left right clock |
 | data_in_num | GPIO_NUM_33 | I2S - Serial data              |
 
-
-
-## loop_sampling
-
-This project shows how to use the Arduino `analogRead` function and the Espressif `adc1_get_raw` function.
-
-It also demonstrates how to get a calibrated value back from the ADC to give you the actual voltage at the input.
