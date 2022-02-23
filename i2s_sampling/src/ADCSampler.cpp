@@ -23,12 +23,13 @@ void ADCSampler::unConfigureI2S()
 int ADCSampler::read(int16_t *samples, int count)
 {
     // read from i2s
-    size_t bytes_read = 0;
-    i2s_read(m_i2sPort, samples, sizeof(int16_t) * count, &bytes_read, portMAX_DELAY);
-    int samples_read = bytes_read / sizeof(int16_t);
-    for (int i = 0; i < samples_read; i++)
-    {
-        samples[i] = (2048 - (uint16_t(samples[i]) & 0xfff)) * 15;
-    }
-    return samples_read;
+    size_t bytes_read = 0;  // bytes para almacenar las muestras
+    
+    i2s_read(m_i2sPort, (void*) samples, sizeof(uint16_t) * count, &bytes_read, portMAX_DELAY);
+    
+    for (int i = 0; i < count; i++) {
+        samples[i] = 2048 - (samples[i] & 0x0FFF); // (2048 - (uint16_t(samples[i]) & 0xfff)) * 15;
+    }  // fix for the spiky readings
+
+    return count;
 }
